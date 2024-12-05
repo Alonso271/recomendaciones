@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
-use App\GenreUser;
-use App\GenreMovie;
-use App\Recommendation;
+use App\Models\User;
+use App\Models\GenreUser;
+use App\Models\GenreMovie;
+use App\Models\Recommendation;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -102,7 +102,7 @@ class RegisterController extends Controller
     
     public function showRegistrationForm()
     {
-        $genres = \App\Genre::all();
+        $genres = \App\Models\Genre::all();
         return view('auth.register', compact('genres'));
     }
     

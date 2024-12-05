@@ -45,5 +45,5 @@ Route::post('/review/store', 'ReviewController@store')->name('review.store');
 Route::get('/review/delete', 'ReviewController@delete')->name('review.delete');
 
 //ReviewLikes routes
-Route::post('/review/like', 'ReviewLikesController@like')->name('reviewlikes.like');
-Route::post('/reviewlike/dislike', 'ReviewLikesController@dislike')->name('reviewlikes.dislike');
+Route::post('/review/like/{review_id}', 'ReviewLikesController@like')->name('review.like');
+Route::post('/review/dislike/{review_id}', 'ReviewLikesController@dislike')->name('review.dislike');

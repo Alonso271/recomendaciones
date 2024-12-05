@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,11 +14,11 @@ class GenreUser extends Model
     
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
     
     public function genre()
     {
-        return $this->belongsTo('App\Genre', 'genre_id');
+        return $this->belongsTo('App\Models\Genre', 'genre_id');
     }
 }

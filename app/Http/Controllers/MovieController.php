@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\GenreMovie;
-use App\GenreUser;
-use App\Movie;
-use App\Recommendation;
-use App\LinkProvider;
+use App\Models\GenreMovie;
+use App\Models\GenreUser;
+use App\Models\Movie;
+use App\Models\Recommendation;
+use App\Models\LinkProvider;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;

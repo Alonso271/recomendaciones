@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Recommendation;
-use App\Movie;
+use App\Models\Recommendation;
+use App\Models\Movie;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 

@@ -62,15 +62,16 @@
                 <div>
                     {{ e(wordwrap($review->description, 100, "\n", true)) }}
                 </div>
-                <a href="#" id="like-btn" class="me-4 text-reset">
-                    <i class="fas fa-thumbs-up fa-lg"></i> 
-                    <span id="likes-count">{{ $review->reviewLikes()->where('is_like', true)->count() }}</span>
+                <a href="#" id="like-btn-{{ $review->id }}" class="me-4 text-reset" data-review-id="{{ $review->id }}" data-url="{{ route('review.like', ['review_id' => $review->id]) }}">
+                    <i class="fas fa-thumbs-up fa-lg"></i>
+                    <span id="likes-count-{{ $review->id }}">{{ $review->reviewLikes()->where('is_like', true)->count() }}</span>
                 </a>
-                <a href="#" id="like-btn" class="me-4 text-reset">
-                    <i class="fas fa-thumbs-down fa-lg"></i> 
-                    <span id="likes-count">{{ $review->reviewLikes()->where('is_like', true)->count() }}</span>
+
+                <a href="#" id="dislike-btn-{{ $review->id }}" class="me-4 text-reset" data-review-id="{{ $review->id }}" data-url="{{ route('review.dislike', ['review_id' => $review->id]) }}">
+                    <i class="fas fa-thumbs-down fa-lg"></i>
+                    <span id="dislikes-count-{{ $review->id }}">{{ $review->reviewLikes()->where('is_like', false)->count() }}</span>
                 </a>
-                @if(\Auth::user()->id == $review->user_id)
+                @if(!empty(\Auth::user()) && \Auth::user()->id == $review->user_id)
                     <a href="{{ route('review.delete', ['id' => $review->id]) }}" class="btn btn-link see-more">Eliminar comentario</a>
                 @endif
             </div>

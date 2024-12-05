@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
-use App\Genre;
-use App\GenreUser;
-use App\GenreMovie;
-use App\Recommendation;
+use App\Models\Genre;
+use App\Models\GenreUser;
+use App\Models\GenreMovie;
+use App\Models\Recommendation;
 
 class UserController extends Controller
 {

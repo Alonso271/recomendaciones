@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -29,22 +29,22 @@ class User extends Authenticatable
     
     public function genres()
     {
-        return $this->belongsToMany('App\Genre');
+        return $this->belongsToMany('App\Models\Genre');
     }
     
     public function recommendations() 
     {
-        return $this->hasMany('App\Recommendation');
+        return $this->hasMany('App\Models\Recommendation');
     }
     
     public function reviews() 
     {
-        return $this->hasMany('App\Review');
+        return $this->hasMany('App\Models\Review');
     }
     
     public function reviewLikes() 
     {
-        return $this->hasMany('App\ReviewLike');
+        return $this->hasMany('App\Models\ReviewLike');
     }
     
     public function isAdmin()

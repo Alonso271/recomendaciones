@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,11 +14,11 @@ class Genre extends Model
     
     public function users()
     {
-        return $this->belongsToMany('App\User');
+        return $this->belongsToMany('App\Models\User');
     }
     
     public function movies()
     {
-        return $this->belongsToMany('App\Movie');
+        return $this->belongsToMany('App\Models\Movie');
     }
 }
