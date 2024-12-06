@@ -19,8 +19,8 @@ RUN apt-get update -y && apt-get install -y \
 # Instalamos Composer (para manejar las dependencias de Laravel)
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Instalamos Node.js y npm (usando la versión 12.x compatible con Laravel 5.6)
-RUN curl -fsSL https://deb.nodesource.com/setup_12.x | bash - && \
+# Instalamos Node.js y npm (usando la versión 16.x para evitar problemas con 'node:path')
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
     apt-get install -y nodejs && \
     npm install -g npm@latest
 
