@@ -1,8 +1,7 @@
-# Usamos una imagen base de PHP con FPM (FastCGI Process Manager)
 FROM php:7.4-fpm
 
 # Instalamos las dependencias necesarias para Laravel y Apache
-RUN apt-get update && apt-get install -y \
+RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
@@ -18,7 +17,8 @@ RUN apt-get update && apt-get install -y \
     libapache2-mod-deflate \
     libapache2-mod-expires \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd pdo pdo_mysql soap opcache
+    && docker-php-ext-install gd pdo pdo_mysql soap opcache \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Instalamos Composer (para manejar las dependencias de Laravel)
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -36,7 +36,6 @@ WORKDIR /var/www
 COPY . .
 
 # Instalamos las dependencias de Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer install --optimize-autoloader --no-dev
 
 # Configuramos permisos para storage y bootstrap/cache
