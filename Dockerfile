@@ -39,6 +39,9 @@ COPY .env.example .env
 # Generamos la clave de la aplicación Laravel
 RUN php artisan key:generate
 
+# Agregamos comando para imprimir la estructura del directorio /var/www
+RUN ls -la /var/www
+
 # Exponemos el puerto 80 para que Render pueda acceder a la aplicación
 EXPOSE 80
 
