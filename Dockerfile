@@ -18,10 +18,10 @@ RUN apt-get update && apt-get install -y \
 # Instalamos Composer (para manejar las dependencias de Laravel)
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Habilitamos mod_rewrite de Apache, que es importante para Laravel
-RUN a2enmod rewrite
+# Habilitamos los módulos necesarios de Apache
+RUN a2enmod rewrite proxy_fcgi headers ssl env mime deflate expires security2
 
-# Copiamos el archivo de configuración de Apache (si tienes alguno específico)
+# Copiamos el archivo de configuración de Apache
 COPY apache/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 # Definimos el directorio de trabajo
