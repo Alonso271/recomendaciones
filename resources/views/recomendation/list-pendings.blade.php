@@ -1,4 +1,7 @@
 @extends('layouts.app')
+
+@section('title', 'Lista Pendientes')
+
 @if(session('message'))
     <div class="alert alert-success">
         {{ session('message') }}

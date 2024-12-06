@@ -10,6 +10,8 @@
 @endif
 @extends('layouts.app')
 
+@section('title', $movie->title)
+
 @section('content')
 
     <div class="row justify-content-center mb-3 ml-2 mr-2 ml-lg-0 mr-lg-0">

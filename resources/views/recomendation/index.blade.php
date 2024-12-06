@@ -1,4 +1,7 @@
 @extends('layouts.app')
+
+@section('title', 'Recomendaciones Personalizadas')
+
 @if(session('message'))
     <div class="alert alert-success">
         {{ session('message') }}
