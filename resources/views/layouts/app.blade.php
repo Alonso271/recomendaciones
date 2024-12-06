@@ -11,22 +11,22 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/truncate-text.js') }}"></script>
-    <script src="{{ asset('js/show-form.js') }}"></script>
-    <script src="{{ asset('js/like.js') }}"></script>
+    <script src="{{ app()->environment('local') ? asset('js/app.js') : secure_asset('js/app.js') }}" defer></script>
+    <script src="{{ app()->environment('local') ? asset('js/truncate-text.js') : secure_asset('js/truncate-text.js') }}"></script>
+    <script src="{{ app()->environment('local') ? asset('js/show-form.js') : secure_asset('js/show-form.js') }}"></script>
+    <script src="{{ app()->environment('local') ? asset('js/like.js') : secure_asset('js/like.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-    
+
     <!-- Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
-
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ app()->environment('local') ? asset('css/app.css') : secure_asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ app()->environment('local') ? asset('css/style.css') : secure_asset('css/style.css') }}" rel="stylesheet">
+
 </head>
 <body>
     <div id="app">
