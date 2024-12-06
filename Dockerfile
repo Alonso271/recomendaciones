@@ -17,9 +17,8 @@ RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
     libapache2-mod-ssl \
     libapache2-mod-deflate \
     libapache2-mod-expires \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd pdo pdo_mysql soap opcache \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Instalamos Composer (para manejar las dependencias de Laravel)
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -46,5 +45,5 @@ RUN chmod -R 775 storage bootstrap/cache && \
 # Exponemos el puerto 80 para que Render pueda acceder a la aplicación
 EXPOSE 80
 
-# Comando para iniciar Apache (Render manejará la ejecución de servicios)
+# Comando para iniciar Apache
 CMD ["apache2ctl", "-D", "FOREGROUND"]
