@@ -12,6 +12,8 @@ use App\Models\GenreUser;
 use App\Models\GenreMovie;
 use App\Models\Recommendation;
 
+use GuzzleHttp\Client;
+
 class UserController extends Controller
 {
     
@@ -69,18 +71,57 @@ class UserController extends Controller
 
         $image = $request->file('image');
         if ($image) {
-            $image_name = time() . $image->getClientOriginalName();
+            $apiKey = env('CLOUDINARY_API_KEY');
+            $apiSecret = env('CLOUDINARY_API_SECRET');
+            $cloudName = env('CLOUDINARY_CLOUD_NAME');
 
-            $image->storeAs('public/users', $image_name);
+            // URL de la API de Cloudinary para subir la imagen
+            $url = "https://api.cloudinary.com/v1_1/{$cloudName}/image/upload";
 
-            $user->image = $image_name;
+            // Preparar los datos para la solicitud POST
+            $filePath = $image->getPathname(); // Obtiene la ruta temporal del archivo
+            $uploadPreset = 'ml_default'; // Usando tu upload preset "ml_default"
+
+            // Inicializar cURL para hacer la solicitud POST
+            $client = new Client();
+            try {
+                $response = $client->request('POST', $url, [
+                    'verify' => false,
+                    'multipart' => [
+                        [
+                            'name'     => 'file',
+                            'contents' => fopen($filePath, 'r'),
+                        ],
+                        [
+                            'name'     => 'upload_preset',
+                            'contents' => $uploadPreset, // Usamos el upload preset "ml_default"
+                        ],
+                        [
+                            'name'     => 'api_key',
+                            'contents' => $apiKey,  // Incluye tu API Key
+                        ]
+                    ]
+                ]);
+
+                $responseData = json_decode($response->getBody(), true);
+
+                if (isset($responseData['secure_url'])) {
+                    // Si la imagen fue subida correctamente a Cloudinary, guarda la URL pública
+                    $user->image = $responseData['secure_url'];
+                } else {
+                    // Si no se obtiene la URL, puedes manejar el error según sea necesario
+                    return redirect()->route('config')->with(['message' => 'Error al subir la imagen a Cloudinary']);
+                }
+            } catch (\Exception $e) {
+                return redirect()->route('config')->with(['message' => 'Error al intentar conectar con Cloudinary: ' . $e->getMessage()]);
+            }
         }
 
         $user->update();
 
         return redirect()->route('config')->with(['message' => 'Usuario actualizado correctamente']);
     }
-    
+
     public function getImage($fileName) 
     {
         $file = Storage::disk('users')->get($fileName);
