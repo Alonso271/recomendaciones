@@ -53,4 +53,4 @@ RUN ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default &
 EXPOSE 80
 
 # Comando para iniciar Nginx y PHP-FPM
-CMD ["sh", "-c", "php-fpm & nginx -g 'daemon off;'"]
+CMD ["sh", "-c", "php-fpm && nginx -g 'daemon off;'"]
