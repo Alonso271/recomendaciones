@@ -1,7 +1,7 @@
 # Usamos una imagen base de PHP con FPM (FastCGI Process Manager)
 FROM php:7.4-fpm
 
-# Instalamos las dependencias necesarias para Laravel y Nginx
+# Instalamos las dependencias necesarias para Laravel y Apache
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
@@ -10,15 +10,20 @@ RUN apt-get update && apt-get install -y \
     git \
     unzip \
     libxml2-dev \
-    nginx \
+    apache2 \
+    libapache2-mod-fcgid \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd pdo pdo_mysql soap opcache
+    && docker-php-ext-install gd pdo pdo_mysql soap opcache \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Instalamos Composer (para manejar las dependencias de Laravel)
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Copiamos el archivo de configuración de Nginx
-COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+# Habilitamos mod_rewrite de Apache, que es importante para Laravel
+RUN a2enmod rewrite
+
+# Copiamos el archivo de configuración de Apache
+COPY apache/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 # Definimos el directorio de trabajo
 WORKDIR /var/www
@@ -27,20 +32,20 @@ WORKDIR /var/www
 COPY . .
 
 # Instalamos las dependencias de Composer
-RUN composer install --optimize-autoloader --no-dev
+RUN composer install --optimize-autoloader --no-dev --prefer-dist
+
+# Limpiamos el caché de Composer para reducir el tamaño de la imagen
+RUN composer clear-cache
 
 # Configuramos permisos para storage y bootstrap/cache
 RUN chmod -R 775 storage bootstrap/cache && \
     chown -R www-data:www-data storage bootstrap/cache
 
 # Copiamos el archivo de entorno de Laravel al contenedor
-COPY .env.example .env
-
-# Imprime la estructura de directorios para verificar que todo está en su lugar
-RUN ls -la /var/www
+COPY .env .env
 
 # Exponemos el puerto 80 para que Render pueda acceder a la aplicación
 EXPOSE 80
 
-# Comando para iniciar Nginx y PHP-FPM
-CMD ["sh", "-c", "service nginx start && php-fpm"]
+# Comando para iniciar Apache y PHP-FPM
+CMD ["apache2ctl", "-D", "FOREGROUND"]
