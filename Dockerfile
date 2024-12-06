@@ -1,11 +1,26 @@
 # Usa una imagen base con PHP 7.4 y Nginx
 FROM php:7.4-fpm
 
+# Instalamos las dependencias necesarias para las extensiones
+RUN apt-get update && apt-get install -y \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    zlib1g-dev \
+    libicu-dev \
+    libxml2-dev \
+    libmcrypt-dev \
+    libzip-dev \
+    curl \
+    git \
+    unzip \
+    && apt-get clean
+
 # Instalamos las extensiones necesarias para Laravel
 RUN docker-php-ext-install pdo pdo_mysql mbstring bcmath zip
 
 # Instalamos Nginx
-RUN apt-get update && apt-get install -y nginx
+RUN apt-get install -y nginx
 
 # Establecemos el directorio de trabajo
 WORKDIR /var/www/html
