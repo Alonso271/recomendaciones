@@ -1,27 +1,65 @@
-# Usa una imagen base con PHP 7.4 y Nginx
+# Usamos una imagen base de PHP con FPM (FastCGI Process Manager)
 FROM php:7.4-fpm
 
-# Instalamos las extensiones necesarias para Laravel
-RUN docker-php-ext-install pdo pdo_mysql
+# Instalamos las dependencias necesarias para Laravel y Nginx
+RUN apt-get update -y && apt-get install -y \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    zip \
+    git \
+    unzip \
+    libxml2-dev \
+    curl \
+    nginx \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd pdo pdo_mysql soap opcache \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Instalamos Nginx
-RUN apt-get update && apt-get install -y nginx
+# Instalamos Composer (para manejar las dependencias de Laravel)
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Establecemos el directorio de trabajo
-WORKDIR /var/www/html
+# Instalamos Node.js y npm (usando la versión 12.x para Laravel 5.6)
+RUN curl -fsSL https://deb.nodesource.com/setup_12.x | bash - && \
+    apt-get install -y nodejs
 
-# Copia los archivos de tu aplicación al contenedor
-COPY . .
+# Instalamos una versión compatible de npm (npm 6.x)
+RUN npm install -g npm@6
+
+# Definimos el directorio de trabajo
+WORKDIR /var/www
+
+# Copiamos los archivos de Composer primero (para optimizar la cache)
+COPY composer.json composer.lock ./
 
 # Instalamos las dependencias de Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --optimize-autoloader --no-dev
 
-# Copia la configuración de Nginx (ver abajo)
-COPY nginx/default.conf /etc/nginx/conf.d/
+# Copiamos los archivos de npm después (para aprovechar la cache)
+COPY package.json package-lock.json ./
 
-# Exponemos el puerto 80
+# Instalamos las dependencias de npm y compilamos los activos frontend
+RUN npm install --legacy-peer-deps && npm run prod
+
+# Copiamos el resto del código de la aplicación
+COPY . .
+
+# Limpiar el caché de npm
+RUN npm cache clean --force
+
+# Configuramos permisos para storage y bootstrap/cache
+RUN chmod -R 775 storage bootstrap/cache && \
+    chown -R www-data:www-data storage bootstrap/cache
+
+# Copiamos el archivo de configuración de Nginx
+COPY nginx/default.conf /etc/nginx/sites-available/default
+
+# Enlazamos el archivo de configuración de Nginx
+RUN ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default && \
+    rm -rf /etc/nginx/sites-enabled/default
+
+# Exponemos el puerto 80 para servir la aplicación
 EXPOSE 80
 
-# Iniciamos Nginx y PHP-FPM en el mismo contenedor
-CMD service nginx start && php-fpm
+# Comando para iniciar Nginx y PHP-FPM
+CMD ["sh", "-c", "php-fpm && nginx -g 'daemon off;'"]
