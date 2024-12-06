@@ -19,8 +19,8 @@ RUN apt-get update -y && apt-get install -y \
 # Instalamos Composer (para manejar las dependencias de Laravel)
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Instalamos Node.js y npm (versión compatible)
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+# Instalamos Node.js y npm (versión compatible con Laravel 5.6)
+RUN curl -fsSL https://deb.nodesource.com/setup_12.x | bash - && \
     apt-get install -y nodejs && \
     npm install -g npm@latest
 
@@ -33,8 +33,8 @@ COPY . .
 # Instalamos las dependencias de Composer
 RUN composer install --optimize-autoloader --no-dev
 
-# Instalamos las dependencias de npm y compilamos los activos
-RUN npm install && npm run prod
+# Instalamos las dependencias de npm y compilamos los activos frontend
+RUN npm install --legacy-peer-deps && npm run prod
 
 # Configuramos permisos para storage y bootstrap/cache
 RUN chmod -R 775 storage bootstrap/cache && \
@@ -43,12 +43,12 @@ RUN chmod -R 775 storage bootstrap/cache && \
 # Copiamos el archivo de configuración de Nginx
 COPY nginx/default.conf /etc/nginx/sites-available/default
 
-# Creamos el enlace simbólico de configuración en sites-enabled
-RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default && \
+# Enlazamos el archivo de configuración de Nginx
+RUN ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default && \
     rm -rf /etc/nginx/sites-enabled/default
 
-# Exponemos el puerto 80 para que Render pueda acceder a la aplicación
+# Exponemos el puerto 80 para servir la aplicación
 EXPOSE 80
 
 # Comando para iniciar Nginx y PHP-FPM
-CMD ["sh", "-c", "service nginx start && php-fpm"]
+CMD ["sh", "-c", "nginx -g 'daemon off;' & php-fpm"]
