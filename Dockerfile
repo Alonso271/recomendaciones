@@ -29,6 +29,10 @@ COPY . .
 # Instalamos las dependencias de Composer
 RUN composer install --optimize-autoloader --no-dev
 
+# Configuramos permisos para storage y bootstrap/cache
+RUN chmod -R 775 storage bootstrap/cache && \
+    chown -R www-data:www-data storage bootstrap/cache
+
 # Copiamos el archivo de entorno de Laravel al contenedor
 COPY .env.example .env
 
@@ -39,4 +43,4 @@ RUN php artisan key:generate
 EXPOSE 80
 
 # Comando para iniciar Nginx y PHP-FPM
-CMD service nginx start && php-fpm
+CMD ["sh", "-c", "service nginx start && php-fpm"]
