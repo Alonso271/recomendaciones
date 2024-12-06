@@ -2,7 +2,7 @@
 FROM php:7.4-fpm
 
 # Instalamos las dependencias necesarias para Laravel y Apache
-RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
+RUN apt-get update -y && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
@@ -12,13 +12,8 @@ RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
     libxml2-dev \
     apache2 \
     libapache2-mod-fcgid \
-    libapache2-mod-headers \
     libapache2-mod-rewrite \
-    libapache2-mod-ssl \
-    libapache2-mod-deflate \
-    libapache2-mod-expires \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Instalamos Composer (para manejar las dependencias de Laravel)
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
