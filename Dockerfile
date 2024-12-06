@@ -16,6 +16,9 @@ RUN apt-get update -y && apt-get install -y \
     && docker-php-ext-install gd pdo pdo_mysql soap opcache \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
+# Instalamos Composer (para manejar las dependencias de Laravel)
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
 # Instalamos Node.js y npm (versión compatible)
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
     apt-get install -y nodejs && \
