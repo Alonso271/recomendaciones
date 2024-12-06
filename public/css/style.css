@@ -50,7 +50,7 @@ img.img-fluid {
 .small-div {
     width: 50%;
     max-width: 400px;
-    margin: 0 auto; /* Para centrar si es necesario */
+    margin: 0 auto;
 }
 
 @media (min-width: 576px) and (max-width: 991px) {

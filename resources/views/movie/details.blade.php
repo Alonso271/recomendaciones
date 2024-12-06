@@ -13,13 +13,16 @@
 @section('content')
 
     <div class="row justify-content-center mb-4">
-        <div class="col-2">
+        <div class="col-lg-2 col-sm-12">
             <img src="{{ $movie->image }}" class="img-fluid w-100" alt="{{ $movie->title }}">
         </div>
-        <div class="col-6">
-            <iframe class="video-iframe" src="{{ $movie->video }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="col-lg-6 col-sm-12">
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src="{{ $movie->video }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
         </div>
     </div>
+
     <div class="row justify-content-center">
         <div class="col-8">
             <p>{{ $movie->description }}</p>
