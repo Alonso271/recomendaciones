@@ -1,7 +1,6 @@
-# Usamos una imagen base de PHP con FPM (FastCGI Process Manager)
-FROM php:7.4-fpm
+FROM php:7.4-apache
 
-# Instalamos las dependencias necesarias para Laravel, Apache y PHP
+# Instalamos las dependencias necesarias para Laravel
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
@@ -10,22 +9,12 @@ RUN apt-get update && apt-get install -y \
     git \
     unzip \
     libxml2-dev \
-    apache2 \
-    libapache2-mod-fcgid \
-    libapache2-mod-headers \
-    libapache2-mod-rewrite \
-    libapache2-mod-ssl \
-    libapache2-mod-deflate \
-    libapache2-mod-expires \
-    libapache2-mod-security2 \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd pdo pdo_mysql soap opcache
+    && docker-php-ext-install gd pdo pdo_mysql soap opcache \
+    && apt-get clean
 
-# Instalamos Composer para gestionar las dependencias de Laravel
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-# Habilitamos los módulos de Apache necesarios
-RUN a2enmod rewrite proxy_fcgi headers ssl deflate expires security2
+# Habilitamos mod_rewrite para Laravel
+RUN a2enmod rewrite
 
 # Copiamos el archivo de configuración de Apache
 COPY apache/000-default.conf /etc/apache2/sites-available/000-default.conf
@@ -37,6 +26,7 @@ WORKDIR /var/www
 COPY . .
 
 # Instalamos las dependencias de Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer install --optimize-autoloader --no-dev
 
 # Configuramos permisos para los directorios storage y bootstrap/cache
