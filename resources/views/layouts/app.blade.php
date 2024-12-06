@@ -9,6 +9,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title', 'Peliculas Recomendadas')</title>
+    
+    <!-- Favicon para navegadores modernos -->
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/Recomendaciones.png') }}">
 
     <!-- Scripts -->
     <script src="{{ app()->environment('local') ? asset('js/app.js') : secure_asset('js/app.js') }}" defer></script>
