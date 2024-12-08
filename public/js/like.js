@@ -16,9 +16,13 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => {
                 if (response.ok) {
                     return response.json();
+                } else if (response.status === 401) {
+                    return response.json().then(errorData => {
+                        throw new Error(errorData.message);
+                    });
                 } else {
                     return response.json().then(errorData => {
-                        throw new Error(errorData.error);
+                        throw new Error(errorData.message || 'Ocurrió un error.');
                     });
                 }
             })
@@ -27,7 +31,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.querySelector(`#dislikes-count-${reviewId}`).innerText = data.dislikes_count;
             })
             .catch(error => {
-                alert(error.message);
+                const messageContainer = document.getElementById('message-container');
+                messageContainer.classList.remove('d-none', 'alert-success');
+                messageContainer.classList.add('alert-danger');
+                messageContainer.innerText = error.message;
+
+                messageContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         });
     });
@@ -49,9 +58,13 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => {
                 if (response.ok) {
                     return response.json();
+                } else if (response.status === 401) {
+                    return response.json().then(errorData => {
+                        throw new Error(errorData.message);
+                    });
                 } else {
                     return response.json().then(errorData => {
-                        throw new Error(errorData.error);
+                        throw new Error(errorData.message || 'Ocurrió un error.');
                     });
                 }
             })
@@ -60,7 +73,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.querySelector(`#dislikes-count-${reviewId}`).innerText = data.dislikes_count;
             })
             .catch(error => {
-                alert(error.message);
+                const messageContainer = document.getElementById('message-container');
+                messageContainer.classList.remove('d-none', 'alert-success');
+                messageContainer.classList.add('alert-danger');
+                messageContainer.innerText = error.message;
+
+                messageContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         });
     });

@@ -1,3 +1,4 @@
+<div id="message-container" class="alert d-none" role="alert"></div>
 @if(session('error'))
     <div class="alert alert-danger">
         {{ session('error') }}
