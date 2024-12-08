@@ -10,42 +10,34 @@ class ReviewLikesController extends Controller
 {
     public function like(Request $request)
     {
-        if (!Auth::check()) {
-        return response()->json([
-            'message' => 'Debes iniciar sesión para dar like a un comentario.',
-            'type' => 'error'
-        ], 401);
-    }
+        if (!empty(Auth::user())) {
+            $review = Review::findOrFail($request->review_id);
 
-        $review = Review::findOrFail($request->review_id);
+            $review->reviewLikes()->where('user_id', Auth::user()->id)->where('is_like', false)->delete();
 
-        $review->reviewLikes()->where('user_id', Auth::user()->id)->where('is_like', false)->delete();
+            $likeExists = $review->reviewLikes()->where('user_id', Auth::user()->id)->where('is_like', true)->exists();
 
-        $likeExists = $review->reviewLikes()->where('user_id', Auth::user()->id)->where('is_like', true)->exists();
+            if ($likeExists) {
+                $review->reviewLikes()->where('user_id', Auth::user()->id)->delete();
+            } else {
+                $review->reviewLikes()->create([
+                    'user_id' => Auth::user()->id,
+                    'is_like' => true
+                ]);
+            }
 
-        if ($likeExists) {
-            $review->reviewLikes()->where('user_id', Auth::user()->id)->delete();
+            $likesCount = $review->reviewLikes()->where('is_like', true)->count();
+            $dislikesCount = $review->reviewLikes()->where('is_like', false)->count();
+
+            return response()->json(['likes_count' => $likesCount, 'dislikes_count' => $dislikesCount]);
         } else {
-            $review->reviewLikes()->create([
-                'user_id' => Auth::user()->id,
-                'is_like' => true
-            ]);
+            return response()->json(['error' => 'Debes iniciar sesión para dar like a un comentario.'], 401);
         }
-
-        $likesCount = $review->reviewLikes()->where('is_like', true)->count();
-        $dislikesCount = $review->reviewLikes()->where('is_like', false)->count();
-
-        return response()->json(['likes_count' => $likesCount, 'dislikes_count' => $dislikesCount]);
     }
 
     public function dislike(Request $request)
     {
-        if (!Auth::check()) {
-            return response()->json([
-                'message' => 'Debes iniciar sesión para dar dislike a un comentario.',
-                'type' => 'error'
-            ], 401);
-        }
+        if (!empty(Auth::user())) {
         $review = Review::findOrFail($request->review_id);
 
         $review->reviewLikes()->where('user_id', Auth::user()->id)->where('is_like', true)->delete();
@@ -65,5 +57,8 @@ class ReviewLikesController extends Controller
         $dislikesCount = $review->reviewLikes()->where('is_like', false)->count();
 
         return response()->json(['likes_count' => $likesCount, 'dislikes_count' => $dislikesCount]);
+        } else {
+            return response()->json(['error' => 'Debes iniciar sesión para dar dislike a un comentario.'], 401);
+        }
     }
 }
