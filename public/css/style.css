@@ -49,6 +49,10 @@ img.img-fluid {
     margin: 0 auto;
 }
 
+.bold-text {
+    font-weight: bold;
+}
+
 .cursorHand{
     cursor: pointer;
 }
