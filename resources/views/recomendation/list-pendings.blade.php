@@ -15,20 +15,20 @@
                 <div class="movie-item">
                     <div class="container">
                         <div class="row">
-                          <div class="col-12 col-sm-4">
-                            <img src="{{ $movie->image }}" class="img-fluid" alt="{{ $movie->title }}">
+                          <div class="col-12 col-md-3 col-lg-4 mb-3 mb-lg-0 mb-md-0">
+                            <a href="{{ route('movie.details', ['id' => $movie->id]) }}"><img src="{{ $movie->image }}" class="img-fluid" alt="{{ $movie->title }}"></a>
                           </div>
 
                           <div class="col-12 col-sm-8">
                             <h2>{{ $movie->title }}</h2>
                             <p><i><b>Calificación:</b></i> {{ $movie->rate }}/10</p>
                             <p class="text-to-truncate"><i><b>Descripción: </b></i> {{ $movie->description }}</p>
-                            <a href="{{ route('movie.details', ['id' => $movie->id]) }}" class="btn btn-link see-more">Ver más</a>
+                            <a href="{{ route('movie.details', ['id' => $movie->id]) }}">Ver más</a>
                             <p><i><b>Géneros:</b></i> 
                                 {{ implode(', ', $movie->genres->pluck('name')->toArray()) }}
                             </p>
                             <p><i><b>Año de lanzamiento:</b></i> {{ $movie->release_year }}</p>
-                            <a href="{{ route('recommendation.removepending', ['id' => $movie->id]) }}" class="btn btn-link see-more">Quitar de pendientes</a>
+                            <a href="{{ route('recommendation.removepending', ['id' => $movie->id]) }}">Quitar de pendientes</a>
                           </div>
                         </div>
                     </div>

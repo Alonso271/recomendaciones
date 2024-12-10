@@ -75,14 +75,11 @@ class UserController extends Controller
             $apiSecret = env('CLOUDINARY_API_SECRET');
             $cloudName = env('CLOUDINARY_CLOUD_NAME');
 
-            // URL de la API de Cloudinary para subir la imagen
             $url = "https://api.cloudinary.com/v1_1/{$cloudName}/image/upload";
 
-            // Preparar los datos para la solicitud POST
-            $filePath = $image->getPathname(); // Obtiene la ruta temporal del archivo
-            $uploadPreset = 'ml_default'; // Usando tu upload preset "ml_default"
+            $filePath = $image->getPathname();
+            $uploadPreset = 'ml_default';
 
-            // Inicializar cURL para hacer la solicitud POST
             $client = new Client();
             try {
                 $response = $client->request('POST', $url, [
@@ -94,11 +91,11 @@ class UserController extends Controller
                         ],
                         [
                             'name'     => 'upload_preset',
-                            'contents' => $uploadPreset, // Usamos el upload preset "ml_default"
+                            'contents' => $uploadPreset,
                         ],
                         [
                             'name'     => 'api_key',
-                            'contents' => $apiKey,  // Incluye tu API Key
+                            'contents' => $apiKey,
                         ]
                     ]
                 ]);
@@ -106,10 +103,8 @@ class UserController extends Controller
                 $responseData = json_decode($response->getBody(), true);
 
                 if (isset($responseData['secure_url'])) {
-                    // Si la imagen fue subida correctamente a Cloudinary, guarda la URL pública
                     $user->image = $responseData['secure_url'];
                 } else {
-                    // Si no se obtiene la URL, puedes manejar el error según sea necesario
                     return redirect()->route('config')->with(['message' => 'Error al subir la imagen a Cloudinary']);
                 }
             } catch (\Exception $e) {

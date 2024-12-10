@@ -1,9 +1,9 @@
-<footer class="text-center text-lg-start bg-body-tertiary text-muted">
+<footer class="text-center text-lg-start bg-body-tertiary text-muted" style="background-color: rgba(0, 0, 0, 0.05);">
 
-  <section class="">
-    <div class="container text-center text-md-start mt-5">
+  <section class="pt-1">
+    <div class="container text-center text-md-start">
 
-      <div class="row mt-3">
+      <div class="row">
 
         <div class="col-md-3 col-lg-3 col-xl-4 mx-auto mb-4">
 
@@ -39,7 +39,7 @@
     </div>
   </section>
 
-<section class="d-flex justify-content-center ">
+<section class="d-flex justify-content-center">
 
     <div class="me-5 d-none d-lg-block">
       <span>Redes sociales :</span>
@@ -68,7 +68,7 @@
       
   </section>
     
-  <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+  <div class="text-center p-4">
     © 2024 Copyright:
     <a class="text-reset fw-bold" href="">Recomendaciones.com</a>
   </div>
