@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @if(session('error'))
-                <div class="alert alert-danger">
-                    {{ session('error') }}
-                </div>
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
 @endif
 @if(session('message'))
-    <div class="alert alert-success"> 
+    <div class="alert alert-success "> 
         {{ session('message') }}
     </div>
 @endif
