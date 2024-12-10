@@ -57,17 +57,3 @@ img.img-fluid {
     cursor: pointer;
 }
 
-@media (min-width: 500px) and (max-width: 767px) {
-    img.img-fluid {
-        max-width: 75%;
-        height: auto;
-    }
-
-    .w-sm-75 {
-        width: 50% !important;
-    }
-
-    .navbar-avatar {
-        margin-left: -500px;
-    }
-}
