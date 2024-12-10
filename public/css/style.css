@@ -43,20 +43,27 @@ img.img-fluid {
      height: 100%; 
 }
 
-.bold-text {
-    font-weight: bold;
-}
-
 .small-div {
     width: 50%;
     max-width: 400px;
     margin: 0 auto;
 }
 
-@media (min-width: 576px) and (max-width: 991px) {
-    img.img-fluid {
-    max-width: 150%;
-    height: auto;
+.cursorHand{
+    cursor: pointer;
 }
 
+@media (min-width: 500px) and (max-width: 767px) {
+    img.img-fluid {
+        max-width: 75%;
+        height: auto;
+    }
+
+    .w-sm-75 {
+        width: 50% !important;
+    }
+
+    .navbar-avatar {
+        margin-left: -500px;
+    }
 }

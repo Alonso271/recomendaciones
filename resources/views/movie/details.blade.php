@@ -79,10 +79,12 @@
                         <i class="fas fa-thumbs-down fa-lg"></i>
                         <span id="dislikes-count-{{ $review->id }}">{{ $review->reviewLikes()->where('is_like', false)->count() }}</span>
                     </a>
-                    @if(!empty(\Auth::user()) && \Auth::user()->id == $review->user_id || \Auth::user()->role == 'admin')
-                        <a href="{{ route('review.delete', ['id' => $review->id]) }}" class="btn btn-link see-more">
-                            <i class="fas fa-trash-alt"></i>
-                        </a>
+                    @if(!empty(\Auth::user()))
+                        @if(\Auth::user()->id == $review->user_id || \Auth::user()->role == 'admin')
+                            <a href="{{ route('review.delete', ['id' => $review->id]) }}" class="btn btn-link see-more">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        @endif
                     @endif
                 </div>
             @endforeach
