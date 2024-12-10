@@ -121,7 +121,7 @@ class MovieController extends Controller
         $movieData  = $this->getMovie($title);
         
         if(empty($movieData)){
-            return response()->json(['error' => 'Error al encontrar película. '], 500);
+            return redirect()->back()->with('error', 'No se ha encontrado la película');
         }else{
             $movie->title        = $movieData['moviedata']['title'];
             $movie->description  = $movieData['moviedata']['overview'];
