@@ -69,8 +69,8 @@
                                 @foreach($genres as $key => $genre)
                                     <div class="col-3 d-flex justify-content-center align-items-center mb-3">
                                         <div class="form-check form-group">
-                                            <input class="form-check-input cursorHand" type="checkbox" name="genres[]" id="genre{{$genre->id}}" value="{{$genre->id}}">
-                                            <label class="form-check-label cursorHand" for="genre{{$genre->id}}">
+                                            <input class="form-check-input cursor-hand" type="checkbox" name="genres[]" id="genre{{$genre->id}}" value="{{$genre->id}}">
+                                            <label class="form-check-label cursor-hand" for="genre{{$genre->id}}">
                                                 {{$genre->name}}
                                             </label>
                                         </div>

@@ -68,14 +68,14 @@
                                     <div class="col-md-2 d-flex justify-content-center align-items-center mb-3">
                                         <div class="form-check form-group">
                                             <input 
-                                                class="form-check-input cursorHand" 
+                                                class="form-check-input cursor-hand" 
                                                 type="checkbox" 
                                                 name="genres[]" 
                                                 id="genre{{$genre->id}}" 
                                                 value="{{$genre->id}}" 
                                                 {{ $genreUsers->contains('genre_id', $genre->id) ? 'checked' : '' }}
                                             >
-                                            <label class="form-check-label cursorHand" for="genre{{$genre->id}}">
+                                            <label class="form-check-label cursor-hand" for="genre{{$genre->id}}">
                                                 {{$genre->name}}
                                             </label>
                                         </div>
