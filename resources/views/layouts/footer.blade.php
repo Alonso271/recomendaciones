@@ -1,4 +1,4 @@
-<footer class="text-center text-lg-start bg-body-tertiary text-muted" style="background-color: rgba(0, 0, 0, 0.05);">
+<footer class="color-footer text-center text-lg-start bg-body-tertiary text-muted" style="background-color: rgba(0, 0, 0, 0.05);">
 
   <section class="pt-1">
     <div class="container text-center text-md-start">

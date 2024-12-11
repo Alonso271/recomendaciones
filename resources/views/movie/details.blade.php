@@ -1,13 +1,3 @@
-@if(session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-@endif
-@if(session('message'))
-    <div class="alert alert-success">
-        {{ session('message') }}
-    </div>
-@endif
 @extends('layouts.app')
 
 @section('title', $movie->title)
@@ -65,7 +55,7 @@
             </div>
         @else
             @foreach ($movie->reviews as $review)
-                <div class="col-12 col-md-8 mb-5 text-center">
+                <div class="col-12 col-md-8 mb-5 text-center" id="review-{{ $review->id }}">
                     <h4>{{ $review->title }}</h4>
                     <div>
                         {{ e(wordwrap($review->description, 100, "\n", true)) }}
@@ -81,21 +71,25 @@
                     </a>
                     @if(!empty(\Auth::user()))
                         @if(\Auth::user()->id == $review->user_id || \Auth::user()->role == 'admin')
-                            <a href="{{ route('review.delete', ['id' => $review->id]) }}" class="btn btn-link see-more">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
+                            @include('includes.modal-confirmation')
+                                <a href="javascript:void(0)" class="btn btn-link see-more" 
+                                    data-toggle="modal" data-target="#confirmModal" 
+                                    data-review-id="{{ $review->id }}" 
+                                    data-url="{{ route('review.delete', ['review_id' => $review->id]) }}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
                         @endif
                     @endif
                 </div>
             @endforeach
         @endif
         <div class="col-12 col-md-8 text-center">
-            <button id="showFormBtn" class="btn btn-primary mt-3">Añade un comentario</button>
+            <button id="showFormBtn" class="btn btn-primary mb-3">Añade un comentario</button>
         </div>
         <div class="col-12 col-md-8 text-center">
             <div id="reviewForm" style="display: none;">
                 <h2>Crear Comentario para {{ $movie->title }}</h2>
-                <form action="{{ route('review.store', ['movie_id' => $movie->id]) }}" method="POST" style="display: flex; flex-direction: column; align-items: center;">
+                <form action="{{ route('review.store', ['movie_id' => $movie->id]) }}" method="POST" style="display: flex; flex-direction: column; align-items: center;" onsubmit="return validateForm()">
                     @csrf
                     <input type="hidden" name="movie_id" value="{{ $movie->id }}">
                     <div class="form-group" style="width: 100%; max-width: 600px;">

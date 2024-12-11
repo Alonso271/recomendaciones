@@ -13,7 +13,7 @@
                             <a href="{{ route('movie.details', ['id' => $movie->id]) }}"><img src="{{ $movie->image }}" class="img-fluid" alt="{{ $movie->title }}"></a>
                           </div>
 
-                           <div class="col-12 col-md-6 col-lg-8">
+                           <div class="col-12 col-md-9 col-lg-8">
                             <h2>{{ $movie->title }}</h2>
                             <p><i><b>Calificación: </b></i> {{ $movie->rate }}/10</p>
                             <p class="text-to-truncate"><i><b>Descripción: </b></i> {{ $movie->description }}</p>

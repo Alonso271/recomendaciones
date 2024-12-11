@@ -26,16 +26,15 @@ class ReviewController extends Controller
        return redirect()->back()->with('message', 'Comentario añadido correctamente.');
     }
     
-    public function delete(Request $request)
-{
-    $review = Review::where('id', $request->id)
-        ->first();
+    public function delete(Request $request, $review_id)
+    {
+        $review = Review::find($review_id);
 
-    if ($review) {
-        $review->delete();
-        return redirect()->back()->with('message', 'Comentario eliminado correctamente.');
+        if ($review) {
+            $review->delete();
+            return response()->json(['success' => true], 200);  // Respuesta exitosa
+        }
+
+        return response()->json(['success' => false, 'message' => 'No se encontró el comentario para eliminar.'], 404);  // Error
     }
-
-    return redirect()->back()->with('error', 'No se encontró el comentario para eliminar.');
-}
 }

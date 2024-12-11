@@ -18,6 +18,9 @@
     <script src="{{ app()->environment('local') ? asset('js/truncate-text.js') : secure_asset('js/truncate-text.js') }}"></script>
     <script src="{{ app()->environment('local') ? asset('js/show-form.js') : secure_asset('js/show-form.js') }}"></script>
     <script src="{{ app()->environment('local') ? asset('js/like.js') : secure_asset('js/like.js') }}"></script>
+    <script src="{{ app()->environment('local') ? asset('js/changeh1.js') : secure_asset('js/changeh1.js') }}"></script>
+    <script src="{{ app()->environment('local') ? asset('js/validateFormReview.js') : secure_asset('js/validateFormReview.js') }}"></script>
+    <script src="{{ app()->environment('local') ? asset('js/deleteReview.js') : secure_asset('js/deleteReview.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -38,8 +41,8 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     Recomendaciones
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
+                <button class="navbar-toggler sin-borde" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                    @include('includes.avatar')
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">

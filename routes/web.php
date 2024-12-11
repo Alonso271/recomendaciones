@@ -42,7 +42,7 @@ Route::get('/recommendation/listpendings', 'RecommendationController@listPending
 
 //Review routes
 Route::post('/review/store', 'ReviewController@store')->name('review.store');
-Route::get('/review/delete', 'ReviewController@delete')->name('review.delete');
+Route::delete('/review/{review_id}/delete', 'ReviewController@delete')->name('review.delete');
 
 //ReviewLikes routes
 Route::post('/review/like/{review_id}', 'ReviewLikesController@like')->name('review.like');

@@ -65,7 +65,7 @@
                             <h5 class="row justify-content-center">Selecciona tus géneros favoritos</h5>
                             <div class="row justify-content-center">
                                 @foreach($genres as $genre)
-                                    <div class="col-md-2 d-flex justify-content-center align-items-center mb-3">
+                                    <div class="col-3 d-flex justify-content-center align-items-center mb-3">
                                         <div class="form-check form-group">
                                             <input 
                                                 class="form-check-input cursor-hand" 
