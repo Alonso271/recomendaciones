@@ -116,6 +116,76 @@ img.img-fluid {
   background-color: transparent;
 }
 
+.pagination-container {
+    display: flex;
+    flex-direction: column;  
+    align-items: center;    
+    margin-top: 20px;        
+    margin-bottom: 20px;     
+}
+
+.pagination-text {
+    margin-bottom: 10px; 
+    font-size: 16px;     
+    color: #fff;         
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.pagination li {
+    list-style: none;
+    margin: 0 5px;
+}
+
+.pagination li a,
+.pagination li span {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #c62828; 
+    color: #fff;               
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+.pagination li.active a,
+.pagination li.active span {
+    background-color: #8e0000;
+    cursor: default;
+}
+
+.pagination li a:hover,
+.pagination li span:hover {
+    background-color: #b71c1c;
+    transform: scale(1.1);
+}
+
+.pagination li.disabled a,
+.pagination li.disabled span {
+    background-color: #bdbdbd;
+    cursor: not-allowed;
+}
+
+.pagination .page-item:first-child a, 
+.pagination .page-item:last-child a {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 12px;
+    border-radius: 50%;
+}
+
+.pagination .page-item:first-child a:hover,
+.pagination .page-item:last-child a:hover {
+    background-color: #555;
+}
+
 @media (max-width: 767px) {
     img.img-fluid {
         max-width: 75%;

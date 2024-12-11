@@ -40,11 +40,14 @@
         @endif
     </div>
 
-    <div class="pagination">
-        <p>Mostrando del {{ $moviesRecommPaginated->firstItem() }} hasta el {{ $moviesRecommPaginated->lastItem() }} de {{ $moviesRecommPaginated->total() }}</p>
-    </div>
-    <div class="pagination">
-        <p>{{ $moviesRecommPaginated->links('pagination::bootstrap-4') }}</p>
+    <div class="pagination-container">
+        <p class="pagination-text">
+            Mostrando del {{ $moviesRecommPaginated->firstItem() }} hasta el {{ $moviesRecommPaginated->lastItem() }} de {{ $moviesRecommPaginated->total() }}
+        </p>
+
+        <div class="pagination">
+            {{ $moviesRecommPaginated->links('pagination::bootstrap-4') }}
+        </div>
     </div>
 @endsection
 

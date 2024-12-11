@@ -33,11 +33,14 @@
         @endif
     </div>
 
-    <div class="pagination">
-        <p>Mostrando del {{ $movies->firstItem() }} hasta el {{ $movies->lastItem() }} de {{ $movies->total() }}</p>
-    </div>
-    <div class="pagination">
-        <p>{{ $movies->links('pagination::bootstrap-4') }}</p>
+    <div class="pagination-container">
+        <p class="pagination-text">
+            Mostrando del {{ $movies->firstItem() }} hasta el {{ $movies->lastItem() }} de {{ $movies->total() }}
+        </p>
+
+        <div class="pagination">
+            {{ $movies->links('pagination::bootstrap-4') }}
+        </div>
     </div>
 
 @endsection
