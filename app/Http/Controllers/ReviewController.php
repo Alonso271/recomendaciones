@@ -31,6 +31,7 @@ class ReviewController extends Controller
         $review = Review::find($review_id);
 
         if ($review) {
+            $review->reviewLikes()->delete();
             $review->delete();
             return response()->json(['success' => true], 200);  // Respuesta exitosa
         }
