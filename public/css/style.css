@@ -16,6 +16,10 @@ body {
     color: #ffffff !important;
 }
 
+.navbar-toggler {
+    border-width: 3px;
+    border-color: black;
+}
 .navbar .navbar-brand,
 .navbar .nav-link {
   color: #ffffff !important;
