@@ -41,6 +41,11 @@ h1.changed {
     color: black !important;
 }
 
+.logo{
+    height: 55px;
+    width: 55px;
+}
+
 form .avatar{
     margin-bottom: 15px;
     height: 55px;

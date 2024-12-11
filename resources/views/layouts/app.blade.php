@@ -39,7 +39,8 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Recomendaciones
+                    <img src='{{ asset('images/Recomendaciones.png') }}' class='logo'>
+                    Recomendaciones |
                 </a>
                 <button class="navbar-toggler sin-borde" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     @include('includes.avatar')
