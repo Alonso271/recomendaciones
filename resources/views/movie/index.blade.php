@@ -14,7 +14,7 @@
                           </div>
 
                            <div class="col-12 col-md-9 col-lg-8">
-                            <h2>{{ $movie->title }}</h2>
+                               <a href="{{ route('movie.details', ['id' => $movie->id]) }}" class="movie-link"><h2>{{ $movie->title }}</h2></a>
                             <p><i><b>Calificación: </b></i> {{ $movie->rate }}/10</p>
                             <p class="text-to-truncate"><i><b>Descripción: </b></i> {{ $movie->description }}</p>
                             <a href="{{ route('movie.details', ['id' => $movie->id]) }}">Ver más</a>
