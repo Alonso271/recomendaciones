@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container-fluid px-3 px-lg-5">
-    <h1 class="text-center mb-3">{{$movie->title}}</h1>
+    <h1 class="text-center mb-5 mt-3">{{$movie->title}}</h1>
     <div class="row justify-content-center mb-5">
         <div class="col-lg-2 col-md-2 col-sm-8 mb-3 mb-lg-0 mb-md-0 d-flex justify-content-center align-items-center">
             <img src="{{ $movie->image }}" class="img-fluid w-100 w-sm-75" alt="{{ $movie->title }}">
