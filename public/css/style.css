@@ -39,6 +39,7 @@ h1.changed {
 }
 
 .card{
+    background-color: #A9A9A9 !important;
     color: black;
 }
 
@@ -52,7 +53,7 @@ h1.changed {
 }
 
 .movie-link {
-    color: #8e0000;
+    color: #FFFF00;
     text-decoration: none;
 }
 
