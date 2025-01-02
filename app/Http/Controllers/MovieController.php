@@ -171,10 +171,4 @@ class MovieController extends Controller
         return view('movie.details', compact('movie'));
     }
     
-    public function getImage($fileName) 
-    {
-        $file = Storage::disk('movies')->get($fileName);
-        
-        return new Response($file, 200);
-    }
 }
